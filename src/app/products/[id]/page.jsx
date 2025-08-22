@@ -1,10 +1,12 @@
 import { notFound } from "next/navigation";
 import { getProducts } from "../../lib/products";
 
-export default async function ProductDetails({ params }) {
-  const { id } = params;
+export default async function ProductDetails(props) {
+  const params = await props.params;
+  const serial = parseInt(params.id); // URL is now /products/1
+
   const products = await getProducts();
-  const product = products.find((p) => p.id === id);
+  const product = products.find((p) => p.serial === serial);
 
   if (!product) notFound();
 
